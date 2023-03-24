@@ -5,6 +5,7 @@ from selenium.webdriver.firefox.options import Options
 from phonenumbers import carrier, timezone
 from selenium import webdriver
 from time import sleep
+import platform
 import phonenumbers
 import random
 import arabic_reshaper  # pip install arabic_reshaper
@@ -87,20 +88,34 @@ class Main():
         if name != ['']:
             # Print The names
             for x, Fullname in enumerate(name):
-
-                # Change the format to arabic
-                reshaped_text = arabic_reshaper.reshape(Fullname)
-                bidi_text = bidi.algorithm.get_display(reshaped_text)
                 
-                # Check block status
-                if bidi_text == "ﺎﺘﻗﺆﻣ ﻚﻨﻋ ﺞﺋﺎﺘﻨﻟﺍ ﺐﺠﺣ ﻢﺗ":
-                    print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
-                    exit()
-                # Continue the loop and print the available names
-                else:
-                    print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {bidi_text}")
-                    sleep(1)
-                    log.write(f"[INFO] Victim {x+1}: {bidi_text}\n")
+                # Condtion fot Windows OS
+                if platform.system() == 'Windows':
+                    # Change the format to arabic
+                    reshaped_text = arabic_reshaper.reshape(Fullname)
+                    bidi_text = bidi.algorithm.get_display(reshaped_text)
+                    
+                    # Check block status
+                    if bidi_text == "ﺎﺘﻗﺆﻣ ﻚﻨﻋ ﺞﺋﺎﺘﻨﻟﺍ ﺐﺠﺣ ﻢﺗ":
+                        print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
+                        exit()
+                    # Continue the loop and print the available names
+                    else:
+                        print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {bidi_text}")
+                        sleep(1)
+                        log.write(f"[INFO] Victim {x+1}: {bidi_text}\n")
+                
+                # Condtion for Linux OS
+                elif platform.system() == 'Linux':
+                    # Check block status
+                    if Fullname == "ﺎﺘﻗﺆﻣ ﻚﻨﻋ ﺞﺋﺎﺘﻨﻟﺍ ﺐﺠﺣ ﻢﺗ":
+                        print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
+                        exit()
+                    # Continue the loop and print the available names
+                    else:
+                        print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {Fullname}")
+                        sleep(1)
+                        log.write(f"[INFO] Victim {x+1}: {Fullname}\n")
 
             sleep(1)
             print(f"\n\n{RED}[{YELLOW}FINISHED{RED}] {WHITE}Deep scan Done \n")
