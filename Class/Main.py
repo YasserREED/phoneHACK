@@ -123,9 +123,9 @@ class Main():
                         exit()
                     # Continue the loop and print the available names
                     else:
-                        print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {Fullname}")
+                        print(f"\n{RED}[{YELLOW}RESULT{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {Fullname}")
                         sleep(1)
-                        log.write(f"[INFO] Victim {x+1}: {Fullname}\n")
+                        log.write(f"[RESULT] Victim {x+1}: {Fullname}\n")
 
             sleep(1)
             print(f"\n\n{RED}[{YELLOW}FINISHED{RED}] {WHITE}Deep scan Done \n")
