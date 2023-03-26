@@ -20,15 +20,17 @@ BOLD = '\033[1m'
 BLUE = '\033[36m'
 print(BOLD)
 
+
 class Main():
 
     def deepscan(self):
-        
+
         # Identify OS verion
         version = platform.version()
-        
+
         # Create log file for Deep scan
-        log = open(f"Outputs/{self}-Results/DeepSCAN.txt", "w", encoding="utf-8")
+        log = open(f"Outputs/{self}-Results/DeepSCAN.txt",
+                   "w", encoding="utf-8")
 
         # Print the Logo
         Outputs.logo()
@@ -42,9 +44,9 @@ class Main():
         options = Options()
         options.add_argument(f'user-agent={randomAgent}')
         options.add_argument('--headless')
-        
+
         # Check if it Ubuntu system
-        if platform.system() == 'Linux' and 'ubuntu' in version.lower(): 
+        if platform.system() == 'Linux' and 'ubuntu' in version.lower():
             # Using Firefox driver
             driver = webdriver.Firefox(options=options)
             # Get the domain
@@ -98,34 +100,20 @@ class Main():
         if name != ['']:
             # Print The names
             for x, Fullname in enumerate(name):
-                
-                # Condtion fot Windows OS
-                if platform.system() == 'Windows':
-                    # Change the format to arabic
-                    reshaped_text = arabic_reshaper.reshape(Fullname)
-                    bidi_text = bidi.algorithm.get_display(reshaped_text)
-                    
-                    # Check block status
-                    if bidi_text == "تم حجب النتائج عنك مؤقتا":
-                        print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
-                        exit()
-                    # Continue the loop and print the available names
-                    else:
-                        print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {bidi_text}")
-                        sleep(1)
-                        log.write(f"[INFO] Victim {x+1}: {bidi_text}\n")
-                
-                # Condtion for Linux OS
-                elif platform.system() == 'Linux':
-                    # Check block status
-                    if Fullname == "تم حجب النتائج عنك مؤقتا":
-                        print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
-                        exit()
-                    # Continue the loop and print the available names
-                    else:
-                        print(f"\n{RED}[{YELLOW}RESULT{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {Fullname}")
-                        sleep(1)
-                        log.write(f"[RESULT] Victim {x+1}: {Fullname}\n")
+
+                # Change the format to arabic
+                reshaped_text = arabic_reshaper.reshape(Fullname)
+                bidi_text = bidi.algorithm.get_display(reshaped_text)
+
+                # Check block status
+                if bidi_text == "تم حجب النتائج عنك مؤقتا":
+                    print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
+                    exit()
+                # Continue the loop and print the available names
+                else:
+                    print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} Victim {RED}{x+1}{WHITE}: {bidi_text}")
+                    sleep(1)
+                    log.write(f"[INFO] Victim {x+1}: {Fullname}\n")
 
             sleep(1)
             print(f"\n\n{RED}[{YELLOW}FINISHED{RED}] {WHITE}Deep scan Done \n")
@@ -165,7 +153,7 @@ class Main():
         print(f"\n{RED}[{GREEN}INFO{RED}] {WHITE}Gathring info for this number \U0001F50E")
         log.write("[INFO] Gathring info for this number\n\n")
         sleep(3)
-        
+
         # Declare Basic sac output
         if PHONENUMBER != "":
             print(f"\n{RED}[{YELLOW}RESULT{RED}]{WHITE} National Number = {WHITE}0{PHONENUMBER}")
