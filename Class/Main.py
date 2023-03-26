@@ -8,8 +8,8 @@ from time import sleep
 import platform
 import phonenumbers
 import random
-import arabic_reshaper  # pip install arabic_reshaper
-import bidi.algorithm  # pip install python-bidi
+import arabic_reshaper
+import bidi.algorithm
 
 # Colors Here
 YELLOW = '\033[93m'
@@ -23,7 +23,10 @@ print(BOLD)
 class Main():
 
     def deepscan(self):
-
+        
+        # Identify OS verion
+        version = platform.version()
+        
         # Create log file for Deep scan
         log = open(f"Outputs/{self}-Results/DeepSCAN.txt", "w", encoding="utf-8")
 
@@ -39,14 +42,21 @@ class Main():
         options = Options()
         options.add_argument(f'user-agent={randomAgent}')
         options.add_argument('--headless')
+        
+        # Check if it Ubuntu system
+        if platform.system() == 'Linux' and 'ubuntu' in version.lower(): 
+            # Using Firefox driver
+            driver = webdriver.Firefox(options=options)
+            # Get the domain
+            driver.get("https://storage.googleapis.com/ksa-n/index.html")
 
-        # Using Firefox driver
-        driver = webdriver.Firefox(
-            executable_path=GeckoDriverManager().install(), options=options)
+        # Any other system
+        else:
+            # Using Firefox driver
+            driver = webdriver.Firefox(executable_path=GeckoDriverManager().install(), options=options)
 
-        # Get the domain
-        driver.get("https://storage.googleapis.com/ksa-n/index.html")
-
+            # Get the domain
+            driver.get("https://storage.googleapis.com/ksa-n/index.html")
         # Print the Logo
         Outputs.logo()
 
@@ -96,7 +106,7 @@ class Main():
                     bidi_text = bidi.algorithm.get_display(reshaped_text)
                     
                     # Check block status
-                    if bidi_text == "ﺎﺘﻗﺆﻣ ﻚﻨﻋ ﺞﺋﺎﺘﻨﻟﺍ ﺐﺠﺣ ﻢﺗ":
+                    if bidi_text == "تم حجب النتائج عنك مؤقتا":
                         print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
                         exit()
                     # Continue the loop and print the available names
@@ -108,7 +118,7 @@ class Main():
                 # Condtion for Linux OS
                 elif platform.system() == 'Linux':
                     # Check block status
-                    if Fullname == "ﺎﺘﻗﺆﻣ ﻚﻨﻋ ﺞﺋﺎﺘﻨﻟﺍ ﺐﺠﺣ ﻢﺗ":
+                    if Fullname == "تم حجب النتائج عنك مؤقتا":
                         print(f"{RED}[{YELLOW}BLOCKED{RED}]{WHITE} Your have been {YELLOW}Blocked{WHITE}, {GREEN}Please try after {YELLOW}10 Min{WHITE}\n\n")
                         exit()
                     # Continue the loop and print the available names
@@ -158,26 +168,26 @@ class Main():
         
         # Declare Basic sac output
         if PHONENUMBER != "":
-            print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} National Number = {WHITE}0{PHONENUMBER}")
-            log.write(f"[INFO] National Number = 0{PHONENUMBER}\n")
+            print(f"\n{RED}[{YELLOW}RESULT{RED}]{WHITE} National Number = {WHITE}0{PHONENUMBER}")
+            log.write(f"[RESULT] National Number = 0{PHONENUMBER}\n")
         else:
             print(f"\n{YELLOW}[{RED}EMPTY{YELLOW}]{WHITE} National Number = {YELLOW}NA{WHITE}")
-            log.write("[INFO] National Number = NA\n")
+            log.write("[RESULT] National Number = NA\n")
         sleep(2)
         if ISP != "":
-            print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} ISP = {WHITE}{ISP}")
-            log.write(f"[INFO] ISP = {ISP}\n")
+            print(f"\n{RED}[{YELLOW}RESULT{RED}]{WHITE} ISP = {WHITE}{ISP}")
+            log.write(f"[RESULT] ISP = {ISP}\n")
         else:
             print(f"\n{YELLOW}[{RED}EMPTY{YELLOW}]{WHITE} ISP = {YELLOW}NA{WHITE}")
-            log.write("[INFO] ISP = = NA\n")
+            log.write("[RESULT] ISP = NA\n")
 
         sleep(2)
         if CITY != "" and CITY != "Unknown":
-            print(f"\n{RED}[{YELLOW}INFO{RED}]{WHITE} City = {WHITE}{CITY}")
-            log.write(f"[INFO] City = {CITY}\n\n")
+            print(f"\n{RED}[{YELLOW}RESULT{RED}]{WHITE} City = {WHITE}{CITY}")
+            log.write(f"[RESULT] City = {CITY}\n\n")
         else:
             print(f"\n{YELLOW}[{RED}EMPTY{YELLOW}]{WHITE} City = {YELLOW}NA{WHITE}\n\n")
-            log.write("[INFO] City = NA\n\n")
+            log.write("[RESULT] City = NA\n\n")
 
         sleep(2)
         print(f"\n{RED}[{YELLOW}FINISHED{RED}]{WHITE} Basic scan Done. \n")
